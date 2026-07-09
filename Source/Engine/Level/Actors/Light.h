@@ -166,6 +166,12 @@ public:
     float ContactShadowsLength = 0.0f;
 
     /// <summary>
+    /// Micro Shadow
+    /// </summary>
+    API_FIELD(Attributes="EditorOrder(100), EditorDisplay(\"Shadow\"), Range(0.0f, 1.0f)")
+    float MicroShadow = 0.0f;
+
+    /// <summary>
     /// Frequency of shadow updates. 1 - every frame, 0.5 - every second frame, 0 - on start or change. It's the inverse value of how many frames should happen in-between shadow map updates (eg. inverse of 0.5 is 2 thus shadow will update every 2nd frame).
     /// </summary>
     API_FIELD(Attributes="EditorOrder(100), EditorDisplay(\"Shadow\", \"Update Rate\"), Limit(0.0f, 1.0f)")
