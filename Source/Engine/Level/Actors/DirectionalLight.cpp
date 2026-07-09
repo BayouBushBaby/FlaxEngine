@@ -53,6 +53,7 @@ void DirectionalLight::Draw(RenderContext& renderContext)
         data.StaticFlags = GetStaticFlags();
         data.ID = GetID();
         data.ScreenSize = 1.0f;
+        data.MicroShadows = MicroShadow;
         renderContext.List->DirectionalLights.Add(data);
     }
 }

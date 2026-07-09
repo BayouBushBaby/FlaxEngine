@@ -108,6 +108,7 @@ void LightWithShadow::Serialize(SerializeStream& stream, const void* otherObj)
     SERIALIZE(ShadowsUpdateRate);
     SERIALIZE(ShadowsUpdateRateAtDistance);
     SERIALIZE(ShadowsResolution);
+    SERIALIZE(MicroShadow);
 }
 
 void LightWithShadow::Deserialize(DeserializeStream& stream, ISerializeModifier* modifier)
@@ -127,4 +128,5 @@ void LightWithShadow::Deserialize(DeserializeStream& stream, ISerializeModifier*
     DESERIALIZE(ShadowsUpdateRate);
     DESERIALIZE(ShadowsUpdateRateAtDistance);
     DESERIALIZE(ShadowsResolution);
+    DESERIALIZE(MicroShadow);
 }

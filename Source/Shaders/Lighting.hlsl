@@ -161,6 +161,10 @@ float4 GetLighting(float3 viewPos, LightData lightData, GBufferSample gBuffer, f
         result.rgb = lightData.Color * (surfaceLight + subsurfaceLight);
         result.a = 1;
     }
+    
+    //tmp no point light?
+    float tmp = lerp(result.r, 1.0, lightData.Dummy0);
+    result.r = tmp;
 
     return result;
 }

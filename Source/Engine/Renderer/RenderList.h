@@ -54,6 +54,7 @@ struct RenderLightData
 
     float VolumetricScatteringIntensity;
     float ContactShadowsLength;
+    float MicroShadows;
     float ScreenSize;
     uint32 ShadowsBufferAddress;
 

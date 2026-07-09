@@ -115,11 +115,12 @@ void PointLight::Draw(RenderContext& renderContext)
         data.SourceRadius = SourceRadius;
         data.SourceLength = SourceLength;
         data.ContactShadowsLength = ContactShadowsLength;
+        data.MicroShadows = MicroShadow;
         data.IndirectLightingIntensity = IndirectLightingIntensity;
         data.IESTexture = IESTexture ? IESTexture->GetTexture() : nullptr;
         data.StaticFlags = GetStaticFlags();
         data.ID = GetID();
-        data.ScreenSize = Math::Min(1.0f, Math::Sqrt(RenderTools::ComputeBoundsScreenRadiusSquared(position, (float)_sphere.Radius, renderContext.View)));
+        data.ScreenSize = Math::Min(1.0f, Math::Sqrt(RenderTools::ComputeBoundsScreenRadiusSquared(position, (float)_sphere.Radius, renderContext.View)));      
         renderContext.List->PointLights.Add(data);
     }
 }

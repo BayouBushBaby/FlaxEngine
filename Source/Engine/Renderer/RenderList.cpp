@@ -114,6 +114,7 @@ void RenderDirectionalLightData::SetShaderData(ShaderLightData& data, bool useSh
     data.FalloffExponent = 0;
     data.InverseSquared = 0;
     data.RadiusInv = 0;
+    data.Dummy0 = MicroShadows;
 }
 
 bool RenderLocalLightData::CanRenderShadow(const RenderView& view) const
@@ -140,6 +141,7 @@ void RenderSpotLightData::SetShaderData(ShaderLightData& data, bool useShadow) c
     data.FalloffExponent = FallOffExponent;
     data.InverseSquared = UseInverseSquaredFalloff ? 1.0f : 0.0f;
     data.RadiusInv = 1.0f / Radius;
+    data.Dummy0 = MicroShadows;
 }
 
 void RenderPointLightData::SetShaderData(ShaderLightData& data, bool useShadow) const
@@ -157,6 +159,7 @@ void RenderPointLightData::SetShaderData(ShaderLightData& data, bool useShadow) 
     data.FalloffExponent = FallOffExponent;
     data.InverseSquared = UseInverseSquaredFalloff ? 1.0f : 0.0f;
     data.RadiusInv = 1.0f / Radius;
+    data.Dummy0 = MicroShadows;
 }
 
 void RenderSkyLightData::SetShaderData(ShaderLightData& data, bool useShadow) const
