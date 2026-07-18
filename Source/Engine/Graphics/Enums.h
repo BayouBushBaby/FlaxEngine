@@ -1238,3 +1238,30 @@ API_ENUM() enum class ProbeCubemapResolution
     // Cubemap with 2048x2048.
     _2048 = 2048,
 };
+
+/// <summary>
+/// MicroShadowAlgorithm.
+/// </summary>
+API_ENUM() enum class MicroShadowAlgorithm
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// 
+    /// </summary>
+    Reference = 1,
+    /// <summary>
+    /// 
+    /// </summary>
+    NaughtyDog = 2,
+    /// <summary>
+    /// 
+    /// </summary>
+    Activision = 3,
+    /// <summary>
+    /// 
+    /// </summary>
+    Analytical = 4,
+};

@@ -5,6 +5,71 @@
 
 #include "./Flax/LightingCommon.hlsl"
 
+
+float MicroShadowingTermReference(float visibility, float NdotL)
+{
+	float cosTheta = sqrt(1.0f - visibility);
+	return step(cosTheta, NdotL);
+}
+
+ float pow5(float x)
+ {
+    float xx = x * x;
+    return xx * xx * x;
+ }
+
+float CustomMicroShadow(float visibility, float NdotL, float gloss)
+            {         
+                 // Avoid divisions by 0.
+	            if (frac(visibility) == 0.0)
+		            return visibility;
+
+                float sGloss = sin(gloss);
+
+                float visrcp = lerp(0.75,4.0,sGloss);
+
+	            float cosThetaPrime = sqrt(1.0 - lerp(pow5(visibility),visibility, sGloss));
+	            float roughShadow = pow(saturate(NdotL / cosThetaPrime), visrcp * rcp(visibility));
+  
+                float ff = sin(saturate((gloss * 3.0) - 2.0));
+                return pow(roughShadow, 1.0 + ff * lerp(0.,32.0, ff));
+            
+            }
+
+float ApplyMicroShadow(GBufferSample gBuffer,float NdotL)
+{        
+    float visibility = gBuffer.AO;
+    float roughness = gBuffer.Roughness;
+	
+    return CustomMicroShadow(visibility,NdotL, 1.0 - roughness);
+
+    /*
+    // Avoid divisions by 0.
+	if (frac(visibility) == 0.0f)
+		return visibility;
+
+    //Adjust for roughness
+    visibility = pow(visibility,roughness);
+
+
+
+    //Inline pow5 to visibility
+    float vp2 = visibility * visibility;
+    float vp5 = vp2 * vp2 * visibility;    
+
+	float cosThetaPrime = sqrt(1.0f - vp5);
+
+    float roughResult = pow(saturate(NdotL / cosThetaPrime), 0.75f * rcp(visibility));
+    
+    //return roughResult;
+    float smoothResult = MicroShadowingTermReference(visibility, NdotL);
+
+	return lerp(smoothResult,roughResult,roughness);
+    */
+}
+
+
+
 ShadowSample GetShadow(LightData lightData, GBufferSample gBuffer, float4 shadowMask)
 {
     ShadowSample shadow;
@@ -154,6 +219,16 @@ float4 GetLighting(float3 viewPos, LightData lightData, GBufferSample gBuffer, f
 
         // Calculate direct lighting
         LightSample lighting = SurfaceShading(gBuffer, energy, L, V, N);
+      
+        // should ad a define if Microshadows are enabled for deferred 
+        // forward will have to branch, should a Branch Attribute be applied?
+        if(lightData.Dummy0 > 0.0)
+        {
+            float VoL = 1.0 - saturate(dot(V,L));
+            lightData.Dummy0 *= VoL;
+            shadow.SurfaceShadow *= lerp(1.0,ApplyMicroShadow(gBuffer, NoL),lightData.Dummy0);
+        }
+       
 
         // Calculate final light color
         float3 surfaceLight = (lighting.Diffuse + lighting.Specular) * shadow.SurfaceShadow;
@@ -162,10 +237,6 @@ float4 GetLighting(float3 viewPos, LightData lightData, GBufferSample gBuffer, f
         result.a = 1;
     }
     
-    //tmp no point light?
-    float tmp = lerp(result.r, 1.0, lightData.Dummy0);
-    result.r = tmp;
-
     return result;
 }
 

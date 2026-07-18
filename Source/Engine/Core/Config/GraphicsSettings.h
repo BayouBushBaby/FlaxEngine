@@ -81,6 +81,12 @@ public:
     bool AllowCSMBlending = false;
 
     /// <summary>
+    /// MicroShadows.
+    /// </summary>
+    API_FIELD(Attributes = "EditorOrder(1320), DefaultValue(MicroShadowAlgorithm.None), EditorDisplay(\"Quality\", \"MicroShadow Type\")")
+    MicroShadowAlgorithm MicroShadowType = MicroShadowAlgorithm::None;
+
+    /// <summary>
     /// Default probes cubemap resolution (use for Environment Probes, can be overriden per-actor).
     /// </summary>
     API_FIELD(Attributes="EditorOrder(1500), EditorDisplay(\"Quality\")")

@@ -57,7 +57,12 @@ public:
     /// Enables cascades splits blending for directional light shadows.
     /// </summary>
     API_FIELD() static bool AllowCSMBlending;
-
+ 
+    /// <summary>
+    /// MicroShadows.
+    /// </summary>
+    API_FIELD() static MicroShadowAlgorithm MicroShadowType;
+    
     /// <summary>
     /// The Global SDF quality. Controls the volume texture resolution and amount of cascades to use. Available values are: Low, Medium, High, Ultra (or 0, 1, 2, 3).
     /// </summary>

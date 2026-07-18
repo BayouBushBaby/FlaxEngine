@@ -23,6 +23,7 @@ Quality Graphics::ShadowsQuality = Quality::Medium;
 Quality Graphics::ShadowMapsQuality = Quality::Medium;
 float Graphics::ShadowUpdateRate = 1.0f;
 bool Graphics::AllowCSMBlending = false;
+MicroShadowAlgorithm Graphics::MicroShadowType = MicroShadowAlgorithm::None;
 Quality Graphics::GlobalSDFQuality = Quality::High;
 Quality Graphics::GIQuality = Quality::High;
 bool Graphics::GICascadesBlending = false;
@@ -73,6 +74,7 @@ void GraphicsSettings::Apply()
     Graphics::ShadowsQuality = ShadowsQuality;
     Graphics::ShadowMapsQuality = ShadowMapsQuality;
     Graphics::AllowCSMBlending = AllowCSMBlending;
+    Graphics::MicroShadowType = MicroShadowType;
     Graphics::GlobalSDFQuality = GlobalSDFQuality;
     Graphics::GIQuality = GIQuality;
     Graphics::GICascadesBlending = GICascadesBlending;
