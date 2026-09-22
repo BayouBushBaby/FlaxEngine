@@ -246,7 +246,9 @@ bool MaterialGenerator::Generate(WriteStream& source, MaterialInfo& materialInfo
             ADD_FEATURE(TessellationFeature);
         if (isOpaque)
             ADD_FEATURE(DeferredShadingFeature);
-        if (materialInfo.BlendMode != MaterialBlendMode::Opaque)
+        if (!isOpaque && (materialInfo.FeaturesFlags & MaterialFeaturesFlags::DisableDistortion) == MaterialFeaturesFlags::None)
+            ADD_FEATURE(DistortionFeature);
+        if (!isOpaque)
             ADD_FEATURE(ForwardShadingFeature);
         break;
     default:
@@ -627,8 +629,9 @@ bool MaterialGenerator::Generate(WriteStream& source, MaterialInfo& materialInfo
                 if (in.Length() > 0)
                 {
                     tmp.EnsureCapacity(in.Length() + 1, false);
-                    StringUtils::ConvertUTF162ANSI(*in, tmp.Get(), in.Length());
+                    StringUtils::ConvertUTF162ASCII(*in, tmp.Get(), in.Length());
                     source.WriteBytes(tmp.Get(), in.Length());
+                    tmp.Clear();
                 }
             }
         }
